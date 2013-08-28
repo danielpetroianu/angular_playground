@@ -44,4 +44,9 @@ node_modules
 !.gitignore
 *~
 
-
+## ignore vagrant, puppet-librarian and puppet modules
+# .vagrant
+# .librarian
+# .tmp
+*.lock
+provision/puppet/modules/

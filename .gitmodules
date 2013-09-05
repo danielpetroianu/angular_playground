@@ -1,0 +1,6 @@
+[submodule "provision/puppet/modules/nodejs"]
+	path = provision/puppet/modules/nodejs
+	url = git@github.com:willdurand/puppet-nodejs.git
+[submodule "provision/puppet/modules/stdlib"]
+	path = provision/puppet/modules/stdlib
+	url = git@github.com:puppetlabs/puppetlabs-stdlib.git

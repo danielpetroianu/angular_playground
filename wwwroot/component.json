@@ -1,0 +1,7 @@
+{
+    "name": "angular_playground",
+    "version": "0.0.1",
+    "dependencies": {
+        "angularjs": "latest"
+    }
+}

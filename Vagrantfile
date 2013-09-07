@@ -47,7 +47,6 @@ Vagrant.configure("2") do |config|
     vb.customize ["setextradata", :id, "VBoxInternal2/SharedFoldersEnableSymlinksCreate/v-root", "1"]
 
   end
-
   
   # Enable provisioning with Puppet stand alone.  Puppet manifests
   # are contained in a directory path relative to this Vagrantfile.
@@ -57,6 +56,8 @@ Vagrant.configure("2") do |config|
     puppet.manifests_path = "provision/puppet/manifests"
     puppet.manifest_file  = "init.pp"
     puppet.module_path    = "provision/puppet/modules"
+
+     puppet.options = "--verbose --debug"
   end
 
 end

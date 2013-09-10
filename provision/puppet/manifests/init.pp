@@ -8,7 +8,7 @@ package { "git-core":
 #
 
 class { 'nodejs':
-    version     => 'v0.10.17',
+    version     => 'stable',
     with_npm    => true,
     require     => Package["git-core"]
 }

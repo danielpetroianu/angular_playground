@@ -3,33 +3,31 @@ package { "git-core":
     ensure      => installed
 }
 
-#
+# ######################################## #
 # install node js
-#
-
+# ######################################## #
 class { 'nodejs':
-    version     => 'stable',
+    version     => 'v0.10.17',
     with_npm    => true,
     require     => Package["git-core"]
 }
 
 
-#
-# install packages
-#
-
+# ######################################## #
+# install packages with NPM
+# ######################################## #
 package { ["bower", "karma", "grunt-cli"]:
     ensure      => installed,
     provider    => npm    
 }
 
 
-#
+# ######################################## #
 # run bower and install angular
-#
+# ######################################## #
 exec { "bower_install":
     command     => "bower install --allow-root",
-    path        => "/usr/local/bin/:/urs/bin/",
+    path        => "/usr/local/bin/:/usr/bin/",
     cwd         => "/var/www/",
     user        => 'root',
     logoutput   => 'on_failure',
@@ -38,8 +36,11 @@ exec { "bower_install":
 }
 
 
+# ######################################## #
+# 
+# ######################################## #
 include apt
-#
+
 Exec <| title=='apt_update' |> {
     refreshonly => false,
     before      => Package["vim"]

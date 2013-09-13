@@ -1,51 +1,84 @@
 
-package { "git-core":
-    ensure      => installed
-}
-
 # ######################################## #
 # install node js
 # ######################################## #
 class { 'nodejs':
     version     => 'v0.10.17',
-    with_npm    => true,
-    require     => Package["git-core"]
+    with_npm    => true
 }
 
 
 # ######################################## #
 # install packages with NPM
 # ######################################## #
-package { ["bower", "karma", "grunt-cli"]:
+package { ["yo", "bower", "grunt-cli"]:
     ensure      => installed,
-    provider    => npm    
+    provider    => npm,
+    require     => Class["nodejs"]
+}
+
+# ######################################## #
+# install yoeman generators
+# ######################################## #
+package { "generator-angular":
+    ensure      => installed,
+    provider    => npm,
+    require     => Package["yo"]
 }
 
 
 # ######################################## #
-# run bower and install angular
+# Setup angular app with YO
 # ######################################## #
-exec { "bower_install":
-    command     => "bower install --allow-root",
+
+file { "/home/vagrant/wwwroot":
+    ensure => "directory"
+}
+
+exec { "yo_angular":
+    command     => "yes | yo angular",
     path        => "/usr/local/bin/:/usr/bin/",
-    cwd         => "/var/www/",
+    cwd         => "/home/vagrant/wwwroot/",
+    creates     => "/home/vagrant/wwwroot/app",
     user        => 'root',
     logoutput   => 'on_failure',
     refreshonly => false,
-    require     => [ Package["git-core"] , Package["bower"] ]
+    require     => [
+        Package["yo"],
+        Package["generator-angular"],
+        File["/home/vagrant/wwwroot"]
+    ]
 }
 
 
+file_line { "update hostname in gruntfile": 
+    line        => "        hostname: '0.0.0.0'", 
+    path        => "/home/vagrant/wwwroot/Gruntfile.js", 
+    match       => "hostname: '.*'", 
+    ensure      => present,
+    require     => [
+        Exec["yo_angular"],
+        File["/home/vagrant/wwwroot/Gruntfile.js"]
+    ]
+}
+
 # ######################################## #
-# 
+# Utilities
 # ######################################## #
 include apt
 
 Exec <| title=='apt_update' |> {
     refreshonly => false,
-    before      => Package["vim"]
+    before      => [
+        Package["vim"],
+        Package["git-core"]
+    ]
 }
 
 package { "vim":
     ensure      => installed,
+}
+
+package { "git-core":
+    ensure      => installed
 }

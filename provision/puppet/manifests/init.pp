@@ -1,3 +1,4 @@
+include apt
 
 # ######################################## #
 # install node js
@@ -31,13 +32,9 @@ package { "generator-angular":
 # Setup angular app with YO
 # ######################################## #
 
-file { "/home/vagrant/wwwroot":
-    ensure => "directory"
-}
-
 exec { "yo_angular":
     command     => "yes | yo angular",
-    path        => "/usr/local/bin/:/usr/bin/",
+    path        => "/usr/local/bin/:/usr/bin/:/bin:/usr/sbin:/sbin",
     cwd         => "/home/vagrant/wwwroot/",
     creates     => "/home/vagrant/wwwroot/app",
     user        => 'root',
@@ -45,8 +42,7 @@ exec { "yo_angular":
     refreshonly => false,
     require     => [
         Package["yo"],
-        Package["generator-angular"],
-        File["/home/vagrant/wwwroot"]
+        Package["generator-angular"]
     ]
 }
 
@@ -54,19 +50,14 @@ exec { "yo_angular":
 file_line { "update hostname in gruntfile": 
     line        => "        hostname: '0.0.0.0'", 
     path        => "/home/vagrant/wwwroot/Gruntfile.js", 
-    match       => "hostname: '.*'", 
+    match       => "hostname:\s*'.*'", 
     ensure      => present,
-    require     => [
-        Exec["yo_angular"],
-        File["/home/vagrant/wwwroot/Gruntfile.js"]
-    ]
+    require     => Exec["yo_angular"]
 }
 
 # ######################################## #
 # Utilities
 # ######################################## #
-include apt
-
 Exec <| title=='apt_update' |> {
     refreshonly => false,
     before      => [

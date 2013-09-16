@@ -24,6 +24,14 @@ or
 
     vagrant up
 
+### Intendent use
+
+1. Clone this repository
+2. Add a submodule in the wwwroot that points to an empty project `git submodule add git://...path_to_git_repo wwwroot`
+3. Run `vagrant up`. Yeoman will create a angular js project with the angular generator
+4. `cd wwwroot/` and commit your changes
+
+
 ## What will you get ?
 * [yo](http://yeoman.io/)
 * [Bower](http://bower.io/)

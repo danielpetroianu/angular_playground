@@ -33,12 +33,12 @@ package { "generator-angular":
 # ######################################## #
 
 exec { "yo_angular":
-    command     => "yes | yo angular",
+    command     => "yes n | yo angular",
     path        => "/usr/local/bin/:/usr/bin/:/bin:/usr/sbin:/sbin",
     cwd         => "/home/vagrant/wwwroot/",
     creates     => "/home/vagrant/wwwroot/app",
     user        => 'root',
-    logoutput   => 'on_failure',
+    logoutput   => true,
     refreshonly => false,
     require     => [
         Package["yo"],

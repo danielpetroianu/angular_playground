@@ -1,3 +1,6 @@
+## Ignore the wwwroot folder
+wwwroot
+
 ### /Users/daniel/.gitignore-boilerplates/Global/SublimeText.gitignore
 
 # SublimeText project files

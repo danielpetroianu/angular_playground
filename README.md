@@ -24,7 +24,8 @@ or
 ### Intendent use
 
 1. Clone the repository
-2. Add a submodule with the name `wwwroot`, that points to an empty project `git submodule add git://...path_to_git_repo wwwroot`
+2. `cd angular_playground`
+2. Clone an empty repository for the project you want to run in the virtual machine. `git clone git://...path_to_git_repo wwwroot`
 3. Run `vagrant up`. Yeoman will create a angular js project with the [angular generator](https://github.com/yeoman/generator-angular)
 4. `cd wwwroot/` and commit your changes
 
@@ -56,7 +57,3 @@ Vagrant is [very well documented](http://docs.vagrantup.com/v2/) but here are a 
 * `vagrant suspend` will essentially put the machine to 'sleep' with `vagrant resume` waking it back up
 * `vagrant halt` attempts a graceful shutdown of the machine and will need to be brought back with `vagrant up`
 * `vagrant ssh` gives you shell access to the virtual machine
- 
-
-## TODO:
-1. Expose generator-angular options somehow.
